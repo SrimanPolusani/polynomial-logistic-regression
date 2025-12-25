@@ -11,30 +11,27 @@ class LogisticRegression:
         X_loaded_full = np.loadtxt(txt_file, usecols=(0, 1), delimiter=',')
         y_full = np.loadtxt(txt_file, usecols=2, delimiter=',')
 
-        # Normalize original features based on the entire dataset
-        self.X_mean_orig_full = np.mean(X_loaded_full, axis=0)
-        self.X_std_orig_full = np.std(X_loaded_full, axis=0)
-        self.X_std_orig_full[self.X_std_orig_full == 0] = 1.0
-        X_normalized_full = (X_loaded_full - self.X_mean_orig_full) / self.X_std_orig_full
-
-        # Create polynomial features from the entire normalized dataset
-        self.degree = degree
-        X_poly_full = self._map_features(X_normalized_full[:, 0], X_normalized_full[:, 1])
-
-        # Split data into training and test sets (features and labels)
+        # 2. Split data
         self.X_train_orig_split, self.X_test_orig_split, \
             self.y_train, self.y_test = train_test_split(
             X_loaded_full, y_full, test_size=test_size, random_state=random_state,
             stratify=y_full if len(np.unique(y_full)) > 1 else None
         )
 
-        # For training, we need the polynomial features corresponding to the training split
-        # And normalized original features for plotting the training set later
-        self.X_train_normalized_split = (self.X_train_orig_split - self.X_mean_orig_full) / self.X_std_orig_full
-        self.X_train = self._map_features(self.X_train_normalized_split[:, 0], self.X_train_normalized_split[:, 1])
+        # 3. Calculate mean/std on the training Set
+        self.X_mean = np.mean(self.X_train_orig_split, axis=0)
+        self.X_std = np.std(self.X_train_orig_split, axis=0)
+        self.X_std[self.X_std == 0] = 1.0
 
-        # For plotting the test set later, we'll need its normalized original features
-        self.X_test_normalized_split = (self.X_test_orig_split - self.X_mean_orig_full) / self.X_std_orig_full
+        # 4. Normalize the training set (Assign to NEW variable, do not overwrite X_mean)
+        self.X_train_normalized_split = (self.X_train_orig_split - self.X_mean) / self.X_std
+
+        # 5. Normalize the test set using training stats (Assign to NEW variable)
+        self.X_test_normalized_split = (self.X_test_orig_split - self.X_mean) / self.X_std
+
+        # Create polynomial features using the normalized TRAINING split
+        self.degree = degree
+        self.X_train = self._map_features(self.X_train_normalized_split[:, 0], self.X_train_normalized_split[:, 1])
 
         self.m_examples = self.X_train.shape[0]  # Number of training examples
         self.n_features = self.X_train.shape[1]  # Number of polynomial features
@@ -129,7 +126,7 @@ class LogisticRegression:
 
     def predict(self, X_orig_features_subset):
         # Normalize using full dataset's mean and std
-        X_normalized_subset = (X_orig_features_subset - self.X_mean_orig_full) / self.X_std_orig_full
+        X_normalized_subset = (X_orig_features_subset - self.X_mean) / self.X_std
         # Map to polynomial features
         X_poly_subset = self._map_features(X_normalized_subset[:, 0], X_normalized_subset[:, 1])
 
@@ -241,7 +238,7 @@ class LogisticRegression:
 
 # --- Main execution ---
 # Load data
-file_path = r"/data/data2.txt"
+file_path = r"C:\Users\srima\PycharmProjects\logistic_regression\data\data2.txt"
 X_orig_full = np.loadtxt(file_path, usecols=(0, 1), delimiter=',')
 y_full = np.loadtxt(file_path, usecols=2, delimiter=',')
 
