@@ -23,13 +23,13 @@ class LogisticRegression:
         self.X_std = np.std(self.X_train_orig_split, axis=0)
         self.X_std[self.X_std == 0] = 1.0
 
-        # 4. Normalize the training set (Assign to NEW variable, do not overwrite X_mean)
+        # 4. Normalize the training set
         self.X_train_normalized_split = (self.X_train_orig_split - self.X_mean) / self.X_std
 
-        # 5. Normalize the test set using training stats (Assign to NEW variable)
+        # 5. Normalize the test set using training stats
         self.X_test_normalized_split = (self.X_test_orig_split - self.X_mean) / self.X_std
 
-        # Create polynomial features using the normalized TRAINING split
+        # Create polynomial features using the normalized training split
         self.degree = degree
         self.X_train = self._map_features(self.X_train_normalized_split[:, 0], self.X_train_normalized_split[:, 1])
 
