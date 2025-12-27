@@ -4,6 +4,18 @@
 
 ## 1. Results Visualization
 <table>
+   <tr>
+    <td align="center">
+      <img src="https://github.com/SrimanPolusani/polynomial-logistic-regression/blob/master/result_plots/decision_curve_train_plot.png?raw=true" width="100%" />
+      <br />
+      <b>Decision Boundary (Training)</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/SrimanPolusani/polynomial-logistic-regression/blob/master/result_plots/decision_curve_test_plot.png?raw=true" width="100%" />
+      <br />
+      <b>Decision Boundary (Test)</b>
+    </td>
+  </tr>
   <tr>
     <td align="center">
       <img src="https://github.com/SrimanPolusani/polynomial-logistic-regression/blob/master/result_plots/cost_func_plot.png?raw=true" width="100%" />
@@ -14,18 +26,6 @@
       <img src="https://github.com/SrimanPolusani/polynomial-logistic-regression/blob/master/result_plots/sigmoid_func_plot.png?raw=true" width="100%" />
       <br />
       <b>Sigmoid g(z) Samples</b>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://github.com/SrimanPolusani/polynomial-logistic-regression/blob/master/result_plots/decision_curve_train_plot.png?raw=true" width="100%" />
-      <br />
-      <b>Decision Boundary (Training)</b>
-    </td>
-    <td align="center">
-      <img src="https://github.com/SrimanPolusani/polynomial-logistic-regression/blob/master/result_plots/decision_curve_test_plot.png?raw=true" width="100%" />
-      <br />
-      <b>Decision Boundary (Test)</b>
     </td>
   </tr>
 </table>
